@@ -9,9 +9,12 @@ class Card {
     cardNumber: string;
     chipNumber: string;
     nationalNumber: string;
+    nationality: string;
+    gender: string;
+    documentType: string;
 
     constructor() {
-        this.firstnames = this.surname = this.cardNumber = this.chipNumber = this.nationalNumber = "";
+        this.firstnames = this.surname = this.cardNumber = this.chipNumber = this.nationalNumber = this.nationality = this.gender = this.documentType = "";
         this.readCard();
     }
 
@@ -20,6 +23,7 @@ class Card {
             Card.pkcs11.load("C:\\Windows\\System32\\beidpkcs11.dll");
             Card.pkcs11.C_Initialize();
         } catch (error) {
+            console.error(error);
         }
     }
 
@@ -27,11 +31,11 @@ class Card {
        
         this.initPkcs11();
         
-        var slots = Card.pkcs11.C_GetSlotList(true);
-        var slot = slots[0];
-        var session = Card.pkcs11.C_OpenSession(slot, pkcs11js.CKF_RW_SESSION | pkcs11js.CKF_SERIAL_SESSION);
+        let slots = Card.pkcs11.C_GetSlotList(true);
+        let slot = slots[0];
+        let session = Card.pkcs11.C_OpenSession(slot, pkcs11js.CKF_RW_SESSION | pkcs11js.CKF_SERIAL_SESSION);
         Card.pkcs11.C_FindObjectsInit(session, [{ type: pkcs11js.CKA_CLASS, value: pkcs11js.CKO_DATA }]);
-        var hObject = Card.pkcs11.C_FindObjects(session);
+        let hObject = Card.pkcs11.C_FindObjects(session);
 
         while (hObject) {
 
@@ -40,11 +44,33 @@ class Card {
                 { type: pkcs11js.CKA_VALUE }
             ]);
 
-            if(attrs[0].value !== undefined) {
+            if(attrs[0].value !== undefined && attrs[1].value !== undefined) {
                 switch (attrs[0].value.toString()) {
                     case "national_number":
-                        this.nationalNumber = attrs[1].value !== undefined ? attrs[1].value.toString() : "";
+                        this.nationalNumber = attrs[1].value.toString();
                         break;
+                    case "firstnames":
+                        this.firstnames = attrs[1].value.toString();
+                        break;
+                    case "surname":
+                        this.surname = attrs[1].value.toString();
+                        break;
+                    case "card_number":
+                        this.cardNumber = attrs[1].value.toString();
+                        break;
+                    case "chip_number":
+                        this.chipNumber = attrs[1].value.toString();
+                        break;
+                    case "gender":
+                        this.gender = attrs[1].value.toString();
+                        break;
+                    case "nationality":
+                        this.nationality = attrs[1].value.toString();
+                        break;
+                    case "document_type":
+                        this.documentType = attrs[1].value.toString();
+                        break;
+
                 }
             }
             
