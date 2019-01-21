@@ -1,8 +1,8 @@
 import pcsclite = require('@pokusew/pcsclite');
 import EventEmitter = require('events');
-import Card from "./card";
+import Card from './card';
 
-class Reader extends EventEmitter {
+export default class Reader extends EventEmitter {
 
     pcsc: any;
     device: any;
@@ -72,5 +72,3 @@ class Reader extends EventEmitter {
     }
 
 };
-
-module.exports = Reader;

@@ -2,9 +2,10 @@
   "name": "belgium-eid",
   "version": "0.0.1",
   "description": "Belgium eID Card Reader for NodeJs",
-  "main": "/dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "keywords": [
     "eID",
@@ -15,6 +16,10 @@
   "author": "Morgan De Clerck",
   "license": "MIT",
   "homepage": "https://github.com/modeclerck/belgium-eid#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/modeclerck/belgium-eid.git"
+   },
   "bugs": {
     "url": "https://github.com/modeclerck/belgium-eid/issues"
   },

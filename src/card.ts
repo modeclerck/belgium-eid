@@ -1,6 +1,6 @@
 import pkcs11js = require("pkcs11js");
 
-class Card {
+export default class Card {
 
     static pkcs11: pkcs11js.PKCS11 = new pkcs11js.PKCS11();
 
@@ -81,5 +81,3 @@ class Card {
     }
 
 }
-
-export default Card;

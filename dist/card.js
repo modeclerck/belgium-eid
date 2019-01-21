@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var pkcs11js = require("pkcs11js");
 var Card = /** @class */ (function () {
     function Card() {
-        this.firstnames = this.surname = this.cardNumber = this.chipNumber = this.nationalNumber = "";
+        this.firstnames = this.surname = this.cardNumber = this.chipNumber = this.nationalNumber = this.nationality = this.gender = this.documentType = "";
         this.readCard();
     }
     Card.prototype.initPkcs11 = function () {
@@ -12,6 +12,7 @@ var Card = /** @class */ (function () {
             Card.pkcs11.C_Initialize();
         }
         catch (error) {
+            console.error(error);
         }
     };
     Card.prototype.readCard = function () {
@@ -26,10 +27,31 @@ var Card = /** @class */ (function () {
                 { type: pkcs11js.CKA_LABEL },
                 { type: pkcs11js.CKA_VALUE }
             ]);
-            if (attrs[0].value !== undefined) {
+            if (attrs[0].value !== undefined && attrs[1].value !== undefined) {
                 switch (attrs[0].value.toString()) {
                     case "national_number":
-                        this.nationalNumber = attrs[1].value !== undefined ? attrs[1].value.toString() : "";
+                        this.nationalNumber = attrs[1].value.toString();
+                        break;
+                    case "firstnames":
+                        this.firstnames = attrs[1].value.toString();
+                        break;
+                    case "surname":
+                        this.surname = attrs[1].value.toString();
+                        break;
+                    case "card_number":
+                        this.cardNumber = attrs[1].value.toString();
+                        break;
+                    case "chip_number":
+                        this.chipNumber = attrs[1].value.toString();
+                        break;
+                    case "gender":
+                        this.gender = attrs[1].value.toString();
+                        break;
+                    case "nationality":
+                        this.nationality = attrs[1].value.toString();
+                        break;
+                    case "document_type":
+                        this.documentType = attrs[1].value.toString();
                         break;
                 }
             }
@@ -41,3 +63,4 @@ var Card = /** @class */ (function () {
     return Card;
 }());
 exports.default = Card;
+//# sourceMappingURL=card.js.map

@@ -64,5 +64,6 @@ var Reader = /** @class */ (function (_super) {
     }
     return Reader;
 }(EventEmitter));
+exports.default = Reader;
 ;
-module.exports = Reader;
+//# sourceMappingURL=reader.js.map

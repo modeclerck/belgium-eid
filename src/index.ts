@@ -1,3 +1,6 @@
-const reader = require('./reader');
+import Reader from "./reader";
 
-exports.Reader = reader;
+export = function() {
+    let r = new Reader();
+    return r;
+}
